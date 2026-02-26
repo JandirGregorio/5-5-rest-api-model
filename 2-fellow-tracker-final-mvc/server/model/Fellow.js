@@ -1,4 +1,5 @@
-const getId = require('../utils/getId');
+// Auto-incrementing ID generator
+const getId = ((id = 0) => () => ++id)();
 
 // Restrict access to our mock "database" to just the Model
 const fellows = [

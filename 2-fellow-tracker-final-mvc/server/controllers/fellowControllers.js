@@ -7,13 +7,13 @@ response back to the client (or an error message).
 */
 
 // Get All (Read)
-const serveFellows = (req, res) => {
+const listFellows = (req, res) => {
   const fellowsList = Fellow.list();
   res.send(fellowsList);
 }
 
 // Get One (Read)
-const serveFellow = (req, res) => {
+const findFellow = (req, res) => {
   const { id } = req.params;
   const fellow = Fellow.find(Number(id));
 
@@ -71,8 +71,8 @@ const deleteFellow = (req, res) => {
 }
 
 module.exports = {
-  serveFellows,
-  serveFellow,
+  listFellows,
+  findFellow,
   createFellow,
   updateFellow,
   deleteFellow

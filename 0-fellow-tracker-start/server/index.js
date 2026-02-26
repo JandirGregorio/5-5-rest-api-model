@@ -1,19 +1,13 @@
-////////////////////////
-// Imports
-////////////////////////
-
 const express = require('express');
 const path = require('path');
-const getId = require('./utils/getId');
-
-////////////////////////
-// Constants
-////////////////////////
 
 const app = express();
-const pathToFrontendDist = path.join(__dirname, '../frontend/dist');
+const pathToFrontend = path.join(__dirname, '../frontend');
 
-// Mock Database
+// Auto-incrementing ID generator
+const getId = ((id = 0) => () => ++id)();
+
+// In Memory Database
 const fellows = [
   { name: 'Carmen', id: getId() },
   { name: 'Reuben', id: getId() },
@@ -26,27 +20,49 @@ const fellows = [
 
 const logRoutes = (req, res, next) => {
   const time = (new Date()).toLocaleString();
-  req.time = time;
   console.log(`${req.method}: ${req.originalUrl} - ${time}`);
   next();
 };
 
-const serveStatic = express.static(pathToFrontendDist);
+app.use(logRoutes);
+app.use(express.static(pathToFrontend));
 
-app.use(logRoutes);   // Print out every incoming request
-app.use(serveStatic); // Serve static public/ content
-app.use(express.json());
+// TODO: Use the express.json() middleware
 
 ////////////////////////
 // Endpoints
 ////////////////////////
 
-// Get All (Read)
-const serveFellows = (req, res) => {
+// GET /api/fellows
+const listFellows = (req, res) => {
   res.send(fellows);
+};
+
+// POST /api/fellows
+const createFellow = (req, res) => {
+
 }
 
-app.get('/api/fellows', serveFellows);
+// GET /api/fellows/:id
+const findFellow = (req, res) => {
+
+}
+
+// TODO: Create controllers for PATCH and DELETE
+
+app.get('/api/fellows', listFellows);
+
+// TODO: Connect endpoints to controllers
+
+
+
+// Fallback middleware: 
+// -> if a request is sent starting with `/api` this middleware will just pass it along
+// -> all other requests will just be sent the index.html file
+app.get('*', (req, res, next) => {
+  if (req.originalUrl.startsWith('/api')) return next();
+  res.sendFile(path.join(pathToFrontend, 'index.html'));
+});
 
 const port = 8080;
 app.listen(port, () => console.log(`listening at http://localhost:${port}`));
