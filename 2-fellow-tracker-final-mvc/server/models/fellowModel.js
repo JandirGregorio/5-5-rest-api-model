@@ -8,17 +8,17 @@ const fellows = [
 ];
 
 // Can be used like "fellowModel.create()"
-exports.create = (name) => {
+module.exports.create = (name) => {
   const newFellow = { name, id: getId() };
   fellows.push(newFellow);
   return newFellow;
 };
 
-exports.list = () => {
+module.exports.list = () => {
   return [...fellows];
 };
 
-exports.find = (id) => {
+module.exports.find = (id) => {
   const fellow = fellows.find((fellow) => fellow.id === id);
   if (!fellow) {
     return null;
@@ -26,14 +26,14 @@ exports.find = (id) => {
   return { ...fellow };
 };
 
-exports.editName = (id, newName) => {
+module.exports.editName = (id, newName) => {
   const fellow = fellows.find((fellow) => fellow.id === id);
   if (!fellow) return null;
   fellow.name = newName;
   return { ...fellow };
 };
 
-exports.delete = (id) => {
+module.exports.delete = (id) => {
   const fellowIndex = fellows.findIndex((fellow) => fellow.id === id);
   if (fellowIndex < 0) {
     return false;

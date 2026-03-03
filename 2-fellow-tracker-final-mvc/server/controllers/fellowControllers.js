@@ -7,13 +7,13 @@ response back to the client (or an error message).
 */
 
 // Get All (Read)
-exports.listFellows = (req, res) => {
+module.exports.listFellows = (req, res) => {
   const fellowsList = fellowModel.list();
   res.send(fellowsList);
 };
 
 // Get One (Read)
-exports.findFellow = (req, res) => {
+module.exports.findFellow = (req, res) => {
   const { id } = req.params;
   const fellow = fellowModel.find(Number(id));
 
@@ -26,7 +26,7 @@ exports.findFellow = (req, res) => {
 };
 
 // Create
-exports.createFellow = (req, res) => {
+module.exports.createFellow = (req, res) => {
   const { fellowName } = req.body;
   if (!fellowName) {
     return res.status(400).send({ message: "Invalid Name" });
@@ -37,7 +37,7 @@ exports.createFellow = (req, res) => {
 };
 
 // Update
-exports.updateFellow = (req, res) => {
+module.exports.updateFellow = (req, res) => {
   const { fellowName } = req.body;
 
   if (!fellowName) {
@@ -57,7 +57,7 @@ exports.updateFellow = (req, res) => {
 };
 
 // Delete
-exports.deleteFellow = (req, res) => {
+module.exports.deleteFellow = (req, res) => {
   const { id } = req.params;
   const didDelete = fellowModel.delete(Number(id));
 
