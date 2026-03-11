@@ -19,7 +19,12 @@ and the config object is missing. Complete them!
 // TODO: Send a POST request to /api/fellows { fellowName } in the body
 export const createFellow = async (fellowName) => {
   try {
-    const response = await fetch('/api/fellows');
+    const config = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json'},
+        body: JSON.stringify({ fellowName }),
+    };
+    const response = await fetch('/api/fellows', config);
     if (!response.ok) throw Error(`Fetch failed. ${response.status} ${response.statusText}`);
     const data = await response.json();
     return { data, error: null };

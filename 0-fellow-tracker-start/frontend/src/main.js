@@ -17,6 +17,8 @@ const handleAddFellow = async (e) => {
 
   // TODO: call createFellow(fellowName) and handle the response
   console.log(`Creating fellow: ${fellowName}`);
+  const { error } = await createFellow(fellowName);
+  if (error) return renderError(error.message);
 
   nameInput.value = '';
   await loadFellows();
